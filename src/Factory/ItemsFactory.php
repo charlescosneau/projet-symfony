@@ -4,6 +4,7 @@ namespace App\Factory;
 
 use App\Entity\Items;
 use App\Repository\ItemsRepository;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 use Zenstruck\Foundry\RepositoryProxy;
 use Zenstruck\Foundry\ModelFactory;
 use Zenstruck\Foundry\Proxy;
@@ -39,19 +40,21 @@ final class ItemsFactory extends ModelFactory
     {
         return [
             // TODO add your default values here (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories)
-            'title' => self::faker()->title(),
+            'title' => self::faker()->realTextBetween(5, 70),
             'description' => self::faker()->text(),
-            'price' => self::faker()->numberBetween(10, 1000000),
+            'price' => self::faker()->numberBetween(10, 10000),
             'publishedAt' => new \DateTime(sprintf('-%d days', rand(1, 100))), // TODO add DATETIME ORM type manually
+
         ];
     }
 
     protected function initialize(): self
     {
-        // see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#initialization
-        return $this
-            // ->afterInstantiate(function(Items $items): void {})
-        ;
+
+        return $this->afterInstantiate(function(Items $items): void {
+            $slugger = new AsciiSlugger();
+            $items->setSlug($slugger->slug($items->getTitle()));
+        });
     }
 
     protected static function getClass(): string

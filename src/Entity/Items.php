@@ -25,6 +25,9 @@ class Items
     #[ORM\Column(type: 'datetime')]
     private $publishedAt;
 
+    #[ORM\Column(type: 'string', length: 255)]
+    private $slug;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -74,6 +77,18 @@ class Items
     public function setPublishedAt(\DateTimeInterface $publishedAt): self
     {
         $this->publishedAt = $publishedAt;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(?string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }

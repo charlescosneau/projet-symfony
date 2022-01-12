@@ -1,20 +1,22 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}HOME{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/Users/charlescosneau/Documents/symfony/projet-symfony/src/Controller/HomeController.php'|file_link(0) }}">src/Controller/HomeController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/Users/charlescosneau/Documents/symfony/projet-symfony/templates/home/index.html.twig'|file_link(0) }}">templates/home/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <h1 class="display-3">Article en vente</h1>
+    <div class="d-flex align-content-start flex-wrap">
+        {% for item in items %}
+            <div class="card" style="width: 20vw;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.title }}</h5>
+                    <p>{{ item.publishedAt|date('d-m-Y s:i:H') }}</p>
+                    <p>{{ item.price }}<sup>€</sup></p>
+                    <p>{{ item.slug }}</p>
+                    <p class="card-text">{{ item.description }}</p>
+                    <a href="{{ path('app_showone', {slug: item.slug}) }}" class="btn btn-info">Voir le produit</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}

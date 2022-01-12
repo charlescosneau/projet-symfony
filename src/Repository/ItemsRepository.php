@@ -19,22 +19,19 @@ class ItemsRepository extends ServiceEntityRepository
         parent::__construct($registry, Items::class);
     }
 
-    // /**
-    //  * @return Items[] Returns an array of Items objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+    * @return Items[] Returns an array of Items objects
+    */
+    public function findAllOrderByNewest()
     {
-        return $this->createQueryBuilder('i')
-            ->andWhere('i.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('i.id', 'ASC')
-            ->setMaxResults(10)
+        return $this->createQueryBuilder('q')
+            ->andWhere('q.publishedAt IS NOT NULL')
+            ->orderBy('q.publishedAt', 'DESC')
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+
 
     /*
     public function findOneBySomeField($value): ?Items

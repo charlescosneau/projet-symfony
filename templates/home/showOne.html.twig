@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ARTICLE{% endblock %}
+
+{% block body %}
+    <h1 class="display-5">{{ items.title }}</h1>
+    <p class="text-center">{{ items.publishedAt|date('d-m-Y s:i:H') }}</p>
+    <p class="text-center">{{ items.price }}<sup>€</sup></p>
+    <p class="text-center fs-4">{{ items.description }}</p>
+
+{% endblock %}

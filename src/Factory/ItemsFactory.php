@@ -38,13 +38,14 @@ final class ItemsFactory extends ModelFactory
 
     protected function getDefaults(): array
     {
+        $tags = ['vehicule', 'maison', 'electronique', 'mode', 'loisirs', 'art', 'multimedia'];
         return [
             // TODO add your default values here (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories)
             'title' => self::faker()->realTextBetween(5, 70),
             'description' => self::faker()->text(),
             'price' => self::faker()->numberBetween(10, 10000),
             'publishedAt' => new \DateTime(sprintf('-%d days', rand(1, 100))), // TODO add DATETIME ORM type manually
-
+            'tag' => $tags[array_rand($tags, 1)],
         ];
     }
 

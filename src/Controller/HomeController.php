@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Items;
+use App\Repository\QuestionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -28,10 +29,7 @@ class HomeController extends AbstractController
      */
     public function showOne(Items $items): Response
     {
-//        if (!$question) {
-//            throw $this->createNotFoundException('un message d\'erreur');
-//        }
-
+        $question = $items->getQuestions();
         return $this->render('home/showOne.html.twig', ['items' => $items]);
     }
 }

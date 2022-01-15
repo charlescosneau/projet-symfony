@@ -4,8 +4,18 @@
 
 {% block body %}
     <h1 class="display-5">{{ items.title }}</h1>
+    <p class="text-center fs-5"><mark>{{ items.tag }}</mark></p>
     <p class="text-center">{{ items.publishedAt|date('d-m-Y s:i:H') }}</p>
-    <p class="text-center">{{ items.price }}<sup>€</sup></p>
+    <p class="text-center fs-3">{{ items.price }}<sup>€</sup></p>
     <p class="text-center fs-4">{{ items.description }}</p>
 
+    <div>
+        {% for question in items.questions %}
+            <div style="border: solid">
+                <p>{{ question.name }}</p>
+                <p>{{ question.askedAt|date('d-m-Y s:i:H') }}</p>
+                <p>{{ question.question }}</p>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}

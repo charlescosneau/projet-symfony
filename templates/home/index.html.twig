@@ -10,6 +10,7 @@
             <div class="card" style="width: 20vw;">
                 <div class="card-body">
                     <h5 class="card-title">{{ item.title }}</h5>
+                    <p class="fst-italic"><mark>{{ item.tag }}</mark></p>
                     <p>{{ item.publishedAt|date('d-m-Y s:i:H') }}</p>
                     <p>{{ item.price }}<sup>€</sup></p>
                     <p>{{ item.slug }}</p>

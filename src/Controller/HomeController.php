@@ -12,7 +12,7 @@ use App\Repository\ItemsRepository;
 class HomeController extends AbstractController
 {
     /**
-     * @Route("/", name="app_homepage")
+     * @Route("/home", name="app_homepage")
      * @param ItemsRepository $itemsRepository
      * @return Response
      */
@@ -23,7 +23,7 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/question/{slug}", name="app_showone")
+     * @Route("/items/{slug}", name="app_showone")
      * @param Items $items
      * @return Response
      */

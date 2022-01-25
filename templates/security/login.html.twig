@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}LOGIN{% endblock %}
+
+{% block body %}
+    <form method="post" class="w-50 mx-auto mt-5">
+        <input type="text" class="form-control mb-3" name="email" placeholder="Votre Email">
+        <input type="text" class="form-control mb-3" name="password" placeholder="Votre mot de passe">
+        <input type="hidden" name="csrf" value="{{ csrf_token('login_form') }}">
+        <input type="submit" value="Se connecter" class="button button-secondary">
+    </form>
+{% endblock %}

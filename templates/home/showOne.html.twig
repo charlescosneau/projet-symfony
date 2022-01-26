@@ -3,18 +3,24 @@
 {% block title %}ARTICLE{% endblock %}
 
 {% block body %}
-    <h1 class="display-5">{{ items.title }}</h1>
-    <p class="text-center fs-5"><mark>{{ items.tag }}</mark></p>
-    <p class="text-center">{{ items.publishedAt|date('d-m-Y s:i:H') }}</p>
-    <p class="text-center fs-3">{{ items.price }}<sup>€</sup></p>
-    <p class="text-center fs-4">{{ items.description }}</p>
+    <h1 class="display-5 ms-2">{{ items.title }}</h1>
+    <p class="ms-2 fs-5"><mark class="bg-info">{{ items.tag }}</mark></p>
+    <p class="ms-2"><u>Publié le:</u> {{ items.publishedAt|date('d-m-Y s:i:H') }}</p>
+    <p class="ms-2 fs-4"><u>Prix:</u> {{ items.price }}<sup>€</sup></p>
+    <p class="ms-2 fs-5"><u>Vendeur:</u> {{ items.users.lastName }} {{ items.users.firstName }}</p>
+    <p class="ms-2 fs-4">{{ items.description }}</p>
 
     <div>
+        <h4 class="mt-5 ms-2">Commentaires:</h4>
         {% for question in items.questions %}
             <div style="border: solid">
-                <p>{{ question.name }}</p>
-                <p>{{ question.askedAt|date('d-m-Y s:i:H') }}</p>
-                <p>{{ question.question }}</p>
+                <p class="ms-2">{{ question.name }}</p>
+                <p class="ms-2">{{ question.askedAt|date('d-m-Y s:i:H') }}</p>
+                <p class="ms-2">{{ question.question }}</p>
+                {% if app.user.email == items.users.email %}
+                <input type="text" placeholder="Votre réponse....">
+                <button class="mb-2 btn-secondary">Envoyer</button>
+                {% endif %}
             </div>
         {% endfor %}
     </div>

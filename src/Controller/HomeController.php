@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Items;
+use App\Entity\Users;
 use App\Repository\QuestionRepository;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -12,7 +15,7 @@ use App\Repository\ItemsRepository;
 class HomeController extends AbstractController
 {
     /**
-     * @Route("/home", name="app_homepage")
+     * @Route("/", name="app_homepage")
      * @param ItemsRepository $itemsRepository
      * @return Response
      */

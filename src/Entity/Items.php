@@ -36,6 +36,9 @@ class Items
     #[ORM\OneToMany(mappedBy: 'items', targetEntity: Question::class)]
     private $questions;
 
+    #[ORM\ManyToOne(targetEntity: Users::class, inversedBy: 'items')]
+    private $users;
+
     public function __construct()
     {
         $this->questions = new ArrayCollection();
@@ -144,6 +147,18 @@ class Items
                 $question->setItems(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUsers(): ?Users
+    {
+        return $this->users;
+    }
+
+    public function setUsers(?Users $users): self
+    {
+        $this->users = $users;
 
         return $this;
     }

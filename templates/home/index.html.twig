@@ -3,6 +3,13 @@
 {% block title %}HOME{% endblock %}
 
 {% block body %}
+    <div class="d-flex justify-content-end mt-2">
+        {% if is_granted('ROLE_USER') %}
+        <a href="{{ path('app_logout') }}" class="btn btn-secondary me-2 ms-2">Se déconnecter</a>
+        {% else %}
+        <a href="{{ path('app_login') }}" class="btn btn-primary">Se connecter</a>
+        {% endif %}
+    </div>
 
     <h1 class="display-3">Article en vente</h1>
     <div class="d-flex align-content-start flex-wrap">
@@ -15,7 +22,7 @@
                     <p>{{ item.price }}<sup>€</sup></p>
                     <p>{{ item.slug }}</p>
                     <p class="card-text">{{ item.description }}</p>
-                    <a href="{{ path('app_showone', {slug: item.slug}) }}" class="btn btn-info">Voir le produit</a>
+                    <a href="{{ path('app_showone', {slug: item.slug}) }}" class="btn btn-primary">Voir le produit</a>
                 </div>
             </div>
         {% endfor %}

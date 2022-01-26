@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UsersRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -29,6 +31,14 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'json', nullable: true)]
     private $roles = [];
+
+    #[ORM\OneToMany(mappedBy: 'users', targetEntity: Items::class)]
+    private $items;
+
+    public function __construct()
+    {
+        $this->items = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -122,5 +132,35 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // TODO: Implement getUserIdentifier() method.
         return (string) $this->email;
+    }
+
+    /**
+     * @return Collection|Items[]
+     */
+    public function getItems(): Collection
+    {
+        return $this->items;
+    }
+
+    public function addItem(Items $item): self
+    {
+        if (!$this->items->contains($item)) {
+            $this->items[] = $item;
+            $item->setUsers($this);
+        }
+
+        return $this;
+    }
+
+    public function removeItem(Items $item): self
+    {
+        if ($this->items->removeElement($item)) {
+            // set the owning side to null (unless already changed)
+            if ($item->getUsers() === $this) {
+                $item->setUsers(null);
+            }
+        }
+
+        return $this;
     }
 }

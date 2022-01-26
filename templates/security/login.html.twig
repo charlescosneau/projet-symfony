@@ -7,6 +7,11 @@
         <input type="text" class="form-control mb-3" name="email" placeholder="Votre Email">
         <input type="text" class="form-control mb-3" name="password" placeholder="Votre mot de passe">
         <input type="hidden" name="csrf" value="{{ csrf_token('login_form') }}">
+        <div class="checkbox mb-3 mt-3">
+            <label>
+                <input type="checkbox" name="_remember_me"> Se souvenir de moi
+            </label>
+        </div>
         <input type="submit" value="Se connecter" class="button button-secondary">
     </form>
 {% endblock %}

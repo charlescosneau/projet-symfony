@@ -46,6 +46,7 @@ final class ItemsFactory extends ModelFactory
             'price' => self::faker()->numberBetween(10, 10000),
             'publishedAt' => new \DateTime(sprintf('-%d days', rand(1, 100))), // TODO add DATETIME ORM type manually
             'tag' => $tags[array_rand($tags, 1)],
+            'users' => UsersFactory::random(),
         ];
     }
 

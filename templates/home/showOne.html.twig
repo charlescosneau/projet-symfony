@@ -5,9 +5,14 @@
 {% block body %}
     <h1 class="display-5 ms-2">{{ items.title }}</h1>
     <p class="ms-2 fs-5"><mark class="bg-info">{{ items.tag }}</mark></p>
-    <p class="ms-2"><u>Publié le:</u> {{ items.publishedAt|date('d-m-Y s:i:H') }}</p>
+    <p class="ms-2"><u>Publié le:</u> {{ items.publishedAt|date('d-m-Y H:i:s') }}</p>
     <p class="ms-2 fs-4"><u>Prix:</u> {{ items.price }}<sup>€</sup></p>
     <p class="ms-2 fs-5"><u>Vendeur:</u> {{ items.users.lastName }} {{ items.users.firstName }}</p>
+    <div class="js-vote">
+        <button class="badge bg-success vote-up" data-direction="up" data-id="{{ items.users.id }}">+1 :)</button>
+        <button class="badge bg-danger vote-down" data-direction="down" data-id="{{ items.users.id }}">-1 :(</button>
+        <span class="badge bg-secondary mx-3 vote-total">{{ items.users.votes }}</span>
+    </div>
     <p class="ms-2 fs-4">{{ items.description }}</p>
 
     <div>
@@ -15,13 +20,17 @@
         {% for question in items.questions %}
             <div style="border: solid">
                 <p class="ms-2">{{ question.name }}</p>
-                <p class="ms-2">{{ question.askedAt|date('d-m-Y s:i:H') }}</p>
+                <p class="ms-2">{{ question.askedAt|date('d-m-Y H:i:s') }}</p>
                 <p class="ms-2">{{ question.question }}</p>
                 {% if app.user.email == items.users.email %}
-                <input type="text" placeholder="Votre réponse....">
+                <input type="text" placeholder="Répondre à {{ question.name }}">
                 <button class="mb-2 btn-secondary">Envoyer</button>
                 {% endif %}
             </div>
         {% endfor %}
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script defer src="{{ asset('js/vote.js') }}"></script>
 {% endblock %}

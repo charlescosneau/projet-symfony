@@ -35,9 +35,16 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'users', targetEntity: Items::class)]
     private $items;
 
+    #[ORM\OneToMany(mappedBy: 'users', targetEntity: Answer::class)]
+    private $answers;
+
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private $votes = 0;
+
     public function __construct()
     {
         $this->items = new ArrayCollection();
+        $this->answers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -161,6 +168,60 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
             }
         }
 
+        return $this;
+    }
+
+    /**
+     * @return Collection|Answer[]
+     */
+    public function getAnswers(): Collection
+    {
+        return $this->answers;
+    }
+
+    public function addAnswer(Answer $answer): self
+    {
+        if (!$this->answers->contains($answer)) {
+            $this->answers[] = $answer;
+            $answer->setUsers($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnswer(Answer $answer): self
+    {
+        if ($this->answers->removeElement($answer)) {
+            // set the owning side to null (unless already changed)
+            if ($answer->getUsers() === $this) {
+                $answer->setUsers(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getVotes(): ?int
+    {
+        return $this->votes;
+    }
+
+    public function setVotes(?int $votes): self
+    {
+        $this->votes = $votes;
+
+        return $this;
+    }
+
+    public function voteUp(): self
+    {
+        $this->votes++;
+        return $this;
+    }
+
+    public function voteDown(): self
+    {
+        $this->votes--;
         return $this;
     }
 }

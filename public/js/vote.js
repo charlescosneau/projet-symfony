@@ -8,11 +8,12 @@ votes.forEach(function (vote){
         let users_id = e.currentTarget.dataset.id;
         // let pill = document.querySelector(e.currentTarget).parentNode.find('.vote-total');
 
+
         let request = new XMLHttpRequest();
-        request.open('POST', '/users/' + users_id + '/vote', true);
+        request.open('POST', 'http://127.0.0.1:8000/users/' + users_id + '/vote', true);
         request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded, charset=UTF-8');
         request.onreadystatechange = function() {
-            if (this.status === 200) {
+            if (this.readyState === 4 && this.status === 200) {
                 let response = this.responseText;
             }
         };

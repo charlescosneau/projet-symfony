@@ -9,8 +9,8 @@
     <p class="ms-2 fs-4"><u>Prix:</u> {{ items.price }}<sup>€</sup></p>
     <p class="ms-2 fs-5"><u>Vendeur:</u> {{ items.users.lastName }} {{ items.users.firstName }}</p>
     <div class="js-vote">
-        <button class="badge bg-success vote-up" data-direction="up" data-id="{{ items.users.id }}">+1 :)</button>
-        <button class="badge bg-danger vote-down" data-direction="down" data-id="{{ items.users.id }}">-1 :(</button>
+        <a href="{{ path('app_vote', { direction: 'up', userId: items.users.id, slug: items.slug }) }}" class="badge bg-success vote-up" data-direction="up" data-id="{{ items.users.id }}">+1 :)</a>
+        <a href="{{ path('app_vote', { direction: 'down', userId: items.users.id, slug: items.slug }) }}" class="badge bg-danger vote-down" data-direction="down" data-id="{{ items.users.id }}">-1 :(</a>
         <span class="badge bg-secondary mx-3 vote-total">{{ items.users.votes }}</span>
     </div>
     <p class="ms-2 fs-4">{{ items.description }}</p>
@@ -23,8 +23,21 @@
                 <p class="ms-2">{{ question.askedAt|date('d-m-Y H:i:s') }}</p>
                 <p class="ms-2">{{ question.question }}</p>
                 {% if app.user.email == items.users.email %}
-                <input type="text" placeholder="Répondre à {{ question.name }}">
-                <button class="mb-2 btn-secondary">Envoyer</button>
+                    <form method="post" action="{{ path('app_answer') }}">
+                        <input type="text" name="answer-content" placeholder="Répondre à {{ question.name }}">
+                        <input type="hidden" name="answer-questionId" value="{{ question.id }}">
+                        <input type="hidden" name="answer-ItemsSlug" value="{{ items.slug }}">
+                        <input type="submit" value="Envoyer votre réponse" class="button button-secondary">
+                    </form>
+                {% endif %}
+                {% if question.answers %}
+                    <h4>Réponses</h4>
+                    {% for answer in question.answers %}
+                        <div style="border: solid red">
+                            <p>{{  answer.content }}</p>
+                            <p>{{ answer.answerAt|date('d-m-Y H:i:s') }}</p>
+                        </div>
+                    {% endfor %}
                 {% endif %}
             </div>
         {% endfor %}
@@ -32,5 +45,5 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script defer src="{{ asset('js/vote.js') }}"></script>
+{#    <script defer src="{{ asset('js/vote.js') }}"></script>#}
 {% endblock %}

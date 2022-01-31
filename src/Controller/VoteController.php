@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Items;
 use App\Entity\Users;
+use App\Repository\ItemsRepository;
+use App\Repository\UsersRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,22 +14,34 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class VoteController extends AbstractController
 {
+    private $direction;
+    private $userId;
+    private $slug;
+
     /**
-     * @Route("/users/{id}/vote", methods="POST", name="app_vote")
+     * @Route("/vote/{direction}/{userId}/{slug}", name="app_vote")
+     * @param $slug
+     * @param $direction
+     * @param $userId
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param UsersRepository $usersRepository
      * @return Response
      */
-    public function UsersVote(Users $users, Request $request, EntityManagerInterface $entityManager, Items $items): Response
+    public function UsersVote($direction, $userId, $slug, Request $request, EntityManagerInterface $entityManager, UsersRepository $usersRepository): Response
     {
-        $direction = $request->request->get('direction');
+        $this->direction = $direction;
+        $this->userId = $userId;
+        $this->slug = $slug;
+
         if ($direction === 'up') {
-            $items->getUsers()->voteUp();
+            $usersRepository->find($userId)->voteUp();
         } else {
-            $items->getUsers()->voteDown();
+            $usersRepository->find($userId)->voteDown();
         }
 
         $entityManager->flush();
 
-        $question = $items->getQuestions();
-        return $this->render('home/showOne.html.twig', ['items' => $items]);
+        return $this->redirectToRoute('app_showone', ['slug' => $slug]);
     }
 }

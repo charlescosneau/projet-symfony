@@ -12,6 +12,25 @@
     </div>
 
     <h1 class="display-3">Article en vente</h1>
+
+    <form method="post" action="{{ path('app_homepage') }}" class="mb-3">
+        <input type="radio" id="vehicule" name="search" value="vehicule">
+        <label for="vehicule">Véhicule</label>
+        <input type="radio" id="maison" name="search" value="maison">
+        <label for="maison">Maison</label>
+        <input type="radio" id="electronique" name="search" value="electronique">
+        <label for="electronique">Électronique</label>
+        <input type="radio" id="mode" name="search" value="mode">
+        <label for="mode">Mode</label>
+        <input type="radio" id="loisirs" name="search" value="loisirs">
+        <label for="loisirs">Loisirs</label>
+        <input type="radio" id="art" name="search" value="art">
+        <label for="art">Art</label>
+        <input type="radio" id="multimedia" name="search" value="multimedia">
+        <label for="multimedia">Multimedia</label>
+        <input type="submit" value="Appliquer le filtre">
+    </form>
+
     <div class="d-flex align-content-start flex-wrap">
         {% for item in items %}
             <div class="card" style="width: 20vw;">

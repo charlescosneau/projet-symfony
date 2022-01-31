@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Classe\Search;
 use App\Entity\Items;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -31,6 +32,33 @@ class ItemsRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+
+
+//    /**
+//     * Requête qui permet de récupérer les produits en fonction de la recherche de l'utilisateur
+//     * @return Items[]
+//     */
+//    public function findWithSearch(Search $search)
+//    {
+//        $query = $this
+//            ->createQueryBuilder('a')
+//            ->select('t', 'a')
+//            ->join('a.tags', 't');
+//
+//        if(!empty($search->tags)){
+//            $query = $query
+//                ->andWhere('t.id IN (:tags)')
+//                ->setParameter('tags', $search->tags);
+//        }
+//
+//        if(!empty($search->string)){
+//            $query = $query
+//                ->andWhere('a.name LIKE :string')
+//                ->setParameter('string', "%{$search->string}%");
+//        }
+//        return $query->getQuery()->getResult();
+//    }
 
 
     /*
